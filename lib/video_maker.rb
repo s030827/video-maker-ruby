@@ -8,22 +8,22 @@ class VideoMaker
   def initialize
     @data_structure = {}
 
-    askAndReturnSearchTerm
-    askAndReturnPrefix
-    fetchContentFromWikipedia
+    ask_and_return_search_term
+    ask_and_return_prefix
+    fetch_content_from_wikipedia
   end
 
   private
 
-  def askAndReturnSearchTerm
+  def ask_and_return_search_term
     @data_structure['searchTerm'] = TTY::Prompt.new.ask('Type a Wikipedia search term:', required: true)
   end
 
-  def askAndReturnPrefix
+  def ask_and_return_prefix
     @data_structure['prefix'] = TTY::Prompt.new.select("Choose your destiny?", %w(Who\ is What\ is The\ history\ of), cycle: true)
   end
 
-  def fetchContentFromWikipedia
+  def fetch_content_from_wikipedia
     @data_structure['source_content_original'] = get_content(@data_structure['searchTerm'])
     @data_structure['source_content_sanitize'] = content_into_sentences(@data_structure['source_content_original'])
   end
