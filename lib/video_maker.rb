@@ -24,6 +24,7 @@ class VideoMaker
   end
 
   def fetchContentFromWikipedia
-    @data_structure['source_content_original'] = search(@data_structure['searchTerm'])
+    @data_structure['source_content_original'] = get_content(@data_structure['searchTerm'])
+    @data_structure['source_content_sanitize'] = content_into_sentences(@data_structure['source_content_original'])
   end
 end
