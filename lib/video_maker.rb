@@ -1,21 +1,30 @@
 require 'tty-prompt'
+require 'algorithmia'
 
 class VideoMaker
+  include Text
   attr_accessor :data_structure
 
   def initialize
     @data_structure = {}
-    @data_structure['searchTerm'] = askAndReturnSearchTerm
-    @data_structure['prefix']     = askAndReturnPrefix
+
+    askAndReturnSearchTerm
+    askAndReturnPrefix
+    fetchContentFromWikipedia
   end
 
   private
 
   def askAndReturnSearchTerm
-    TTY::Prompt.new.ask('Type a Wikipedia search term:', required: true)
+    @data_structure['searchTerm'] = TTY::Prompt.new.ask('Type a Wikipedia search term:', required: true)
   end
 
   def askAndReturnPrefix
-    TTY::Prompt.new.select("Choose your destiny?", %w(Who\ is What\ is The\ history\ of), cycle: true)
+    @data_structure['prefix'] = TTY::Prompt.new.select("Choose your destiny?", %w(Who\ is What\ is The\ history\ of), cycle: true)
+  end
+
+  def fetchContentFromWikipedia
+    @data_structure['source_content_original'] = get_content(@data_structure['searchTerm'])
+    @data_structure['source_content_sanitize'] = content_into_sentences(@data_structure['source_content_original'])
   end
 end
