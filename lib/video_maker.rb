@@ -1,5 +1,8 @@
 require 'tty-prompt'
 require 'algorithmia'
+require 'json'
+require 'ibm_watson/authenticators'
+require 'ibm_watson/natural_language_understanding_v1'
 
 class VideoMaker
   include Text
@@ -20,11 +23,12 @@ class VideoMaker
   end
 
   def ask_and_return_prefix
-    @data_structure['prefix'] = TTY::Prompt.new.select("Choose your destiny?", %w(Who\ is What\ is The\ history\ of), cycle: true)
+    @data_structure['prefix'] = TTY::Prompt.new.select('Choose your destiny?', %w(Who\ is What\ is The\ history\ of), cycle: true)
   end
 
   def fetch_content_from_wikipedia
     @data_structure['source_content_original'] = get_content(@data_structure['searchTerm'])
-    @data_structure['source_content_sanitize'] = content_into_sentences(@data_structure['source_content_original'])
+    @data_structure['source_content_sanitize'] = content_sanitized(@data_structure['source_content_original'])
+    @data_structure['sentences']               = get_sentences(@data_structure['source_content_sanitize'])
   end
 end
