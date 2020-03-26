@@ -11,7 +11,7 @@ module Text
   def content_into_sentences(input)
     sentence_split = client_algorithmia.algo('StanfordNLP/SentenceSplit/0.1.0')
 
-    sentence_split.pipe(sanitize_content(input)).result.map! do |sentence|
+    sentence_split.pipe(sanitize_content(input)).result.slice(0, 7).map! do |sentence|
       {
         text: sentence,
         keywords: [],
