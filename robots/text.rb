@@ -1,30 +1,56 @@
 module Text
-  def client_algorithmia
-    Algorithmia.client(ENV['KEY_ALGORITHMIA'])
-  end
-
   def get_content(input)
-    wikipedia_parser = client_algorithmia.algo('web/WikipediaParser/0.1.2')
-    wikipedia_parser.pipe(input).result['content']
+    instance_of_algorithmia.algo('web/WikipediaParser/0.1.2').pipe(input).result['content']
   end
 
-  def content_into_sentences(input)
-    sentence_split = client_algorithmia.algo('StanfordNLP/SentenceSplit/0.1.0')
+  def content_sanitized(input)
+    input = input.split("\n")
+    input.reject! { |item| item.start_with?('=') }
+    input.reject!(&:empty?)
+    input.map! { |item| item.gsub(/\((?:\([^()]*\)|[^()])*\)/, '').gsub(/  /, ' ') }
+    input.join(' ')
+  end
 
-    sentence_split.pipe(sanitize_content(input)).result.map! do |sentence|
+  def get_sentences(input)
+    content_into_sentences(input).map! do |sentence|
+      keywords = fetch_keywords_from_sentence(sentence)
+
       {
         text: sentence,
-        keywords: [],
+        keywords: keywords,
         images: []
       }
     end
   end
 
-  def sanitize_content(array)
-    array = array.split("\n")
-    array.reject! { |item| item.start_with?('=') }
-    array.reject!(&:empty?)
-    array.map! { |item| item.gsub(/\((?:\([^()]*\)|[^()])*\)/, '').gsub(/  /, ' ') }
-    array.join(' ')
+  def content_into_sentences(input)
+    instance_of_algorithmia.algo('StanfordNLP/SentenceSplit/0.1.0').pipe(input).result.slice(0, 7)
+  end
+
+  def fetch_keywords_from_sentence(sentence)
+    watson_natural_language_understanding.analyze(
+      text: sentence,
+      features: {
+        keywords: {}
+      }
+    ).result['keywords'].map { |k| k.fetch('text') }
+  end
+
+  def watson_natural_language_understanding
+    IBMWatson::NaturalLanguageUnderstandingV1.new(
+      authenticator: instance_of_watson,
+      version: '2018-03-16',
+      service_url: ENV['URL_NATURAL_LANGUAGE']
+    )
+  end
+
+  def instance_of_algorithmia
+    Algorithmia.client(ENV['KEY_ALGORITHMIA'])
+  end
+
+  def instance_of_watson
+    IBMWatson::Authenticators::IamAuthenticator.new(
+      apikey: ENV['KEY_WATSON']
+    )
   end
 end
