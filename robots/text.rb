@@ -1,4 +1,11 @@
 module Text
+  def fetch_content_from_wikipedia
+    @data_structure['source_content_original'] = get_content(@data_structure['searchTerm'])
+    @data_structure['source_content_sanitize'] = content_sanitized(@data_structure['source_content_original'])
+    @data_structure['sentences']               = get_sentences(@data_structure['source_content_sanitize'])
+    save(@data_structure)
+  end
+
   def get_content(input)
     instance_of_algorithmia.algo('web/WikipediaParser/0.1.2').pipe(input).result['content']
   end
