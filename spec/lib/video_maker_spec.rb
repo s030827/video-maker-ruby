@@ -8,7 +8,7 @@ describe VideoMaker do
     subject(:movie) { VideoMaker.new }
 
     it "Initialize'" do
-      expect(movie.data_structure['searchTerm']).to eq('Banana')
+      expect(movie.data_structure['search_term']).to eq('Banana')
       expect(movie.data_structure['prefix']).to eq('What is')
     end
   end
