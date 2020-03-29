@@ -5,7 +5,7 @@ module Input
   end
 
   def ask_and_return_search_term
-    @data_structure['searchTerm'] = TTY::Prompt.new.ask('Type a Wikipedia search term:', required: true)
+    @data_structure['search_term'] = TTY::Prompt.new.ask('Type a Wikipedia search term:', required: true)
   end
 
   def ask_and_return_prefix
