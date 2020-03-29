@@ -2,6 +2,7 @@ class VideoMaker
   include State
   include Input
   include Text
+  include Image
 
   attr_accessor :data_structure
 
@@ -10,7 +11,7 @@ class VideoMaker
 
     ask_terms
     fetch_content_from_wikipedia
-    load_content_json
+    fetch_images_of_all_sentences
   end
 end
 
