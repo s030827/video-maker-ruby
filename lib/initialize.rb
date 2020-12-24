@@ -1,4 +1,5 @@
 require 'tty-prompt'
+require 'dotenv/load'
 require 'algorithmia'
 require 'json'
 require 'ibm_watson/authenticators'
