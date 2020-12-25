@@ -9,7 +9,7 @@ module Image
       sentence['images'] = link_of_images(sentence['google_search_query'])
     end
 
-    save(@data_structure)
+    save_content_as_json(@data_structure)
   end
 
   def link_of_images(search_query)
