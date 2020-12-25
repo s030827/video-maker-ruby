@@ -176,6 +176,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   algorithmia
@@ -187,7 +188,7 @@ DEPENDENCIES
   tty-prompt
 
 RUBY VERSION
-   ruby 2.6.2p47
+   ruby 2.7.1p83
 
 BUNDLED WITH
-   1.17.2
+   2.2.0
