@@ -13,12 +13,12 @@ module Image
   end
 
   def link_of_images(search_query)
-    response = search_client.list_cses(search_query, cx: ENV['GOOGLE_CSE'], search_type: 'image', num: '2')
+    response = search_client.list_cses(q: search_query, cx: ENV['GOOGLE_CSE'], search_type: 'image', num: '2')
     response.items.map(&:link)
   end
 
   def search_client
-    searcher = Google::Apis::CustomsearchV1::CustomsearchService.new
+    searcher = Google::Apis::CustomsearchV1::CustomSearchAPIService.new
     searcher.key = ENV['KEY_GOOGLE_CLOUD']
     searcher
   end
