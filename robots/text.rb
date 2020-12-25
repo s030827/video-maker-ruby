@@ -3,7 +3,7 @@ module Text
     @data_structure['source_content_original'] = get_content(@data_structure['search_term'])
     @data_structure['source_content_sanitize'] = content_sanitized(@data_structure['source_content_original'])
     @data_structure['sentences']               = get_sentences(@data_structure['source_content_sanitize'])
-    save(@data_structure)
+    save_content_as_json(@data_structure)
   end
 
   def get_content(input)

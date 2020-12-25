@@ -35,6 +35,8 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.7.6)
+    down (5.2.0)
+      addressable (~> 2.5)
     erubi (1.10.0)
     eventmachine (1.2.7)
     faraday (1.2.0)
@@ -182,6 +184,7 @@ DEPENDENCIES
   algorithmia
   byebug
   dotenv
+  down
   google-api-client
   ibm_watson
   rspec-rails

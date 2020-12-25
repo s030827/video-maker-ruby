@@ -1,5 +1,5 @@
 module State
-  def save(hash)
+  def save_content_as_json(hash)
     File.open('content.json', 'w') do |file|
       file.write(JSON.pretty_generate(hash))
     end
