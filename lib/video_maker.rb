@@ -3,6 +3,7 @@ class VideoMaker
   include Input
   include Text
   include Image
+  include Video
 
   attr_accessor :data_structure
 
@@ -12,6 +13,7 @@ class VideoMaker
     ask_terms
     fetch_content_from_wikipedia
     fetch_images_of_all_sentences
+    produce_video
   end
 end
 

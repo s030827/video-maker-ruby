@@ -14,7 +14,7 @@ module Image
   end
 
   def link_of_images(search_query)
-    response = search_client.list_cses(q: search_query, cx: ENV['GOOGLE_CSE'], search_type: 'image', num: '10')
+    response = search_client.list_cses(q: search_query, cx: ENV['GOOGLE_CSE'], search_type: 'image', file_type: 'jpg', num: '10')
     response.items.map(&:link)
   end
 
